@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="16dp">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="@string/user_avatar"
+        tools:src="@tools:sample/avatars"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextContent.Medium"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_avatar"
+        tools:text="@string/dummy_name" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        style="@style/TextContent.Small"
+        android:layout_marginStart="4dp"
+        app:layout_constraintTop_toTopOf="@id/tv_name"
+        app:layout_constraintStart_toEndOf="@id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_name"
+        tools:text="@string/dummy_username" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        style="@style/TextContent.Small.WithDrawable"
+        android:layout_marginTop="8dp"
+        tools:text="@string/dummy_location"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:drawableStartCompat="@drawable/ic_location_20" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
