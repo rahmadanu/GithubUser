@@ -35,14 +35,17 @@
         tools:text="@string/dummy_username" />
 
     <TextView
-        android:id="@+id/tv_location"
+        android:id="@+id/tv_link"
         style="@style/TextContent.Small.WithDrawable"
         android:layout_marginTop="8dp"
-        tools:text="@string/dummy_location"
+        android:textSize="12sp"
         android:gravity="center_vertical"
+        android:autoLink="web"
+        android:textColorLink="@android:color/tab_indicator_text"
         app:layout_constraintStart_toStartOf="@id/tv_name"
         app:layout_constraintTop_toBottomOf="@id/tv_name"
-        app:drawableStartCompat="@drawable/ic_location_20" />
+        app:drawableStartCompat="@drawable/ic_web_20"
+        tools:text="https://github.com/sidiqpermana"/>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="0dp"
