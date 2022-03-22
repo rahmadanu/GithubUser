@@ -67,11 +67,6 @@ class MainViewModel: ViewModel() {
                 _hasConnectionFailed.value = false
                 if (response.isSuccessful) {
                     userDetail.postValue(response.body())
-
-                    if (response.body()?.name.isNullOrEmpty()) response.body()?.name = "Belum diatur"
-                    if (response.body()?.company.isNullOrEmpty()) response.body()?.company = "Belum diatur"
-                    if (response.body()?.location.isNullOrEmpty()) response.body()?.location = "Belum diatur"
-
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
                 }
