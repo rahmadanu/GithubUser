@@ -34,8 +34,8 @@ class DetailActivity : AppCompatActivity() {
 
         mainViewModel.findUserDetail(user!!)
         mainViewModel.getDetailUser().observe(this) {
-            if (it != null) {
-                binding.apply {
+            binding.apply {
+                 if (it != null) {
                     Glide.with(this@DetailActivity)
                         .load(it.avatarUrl)
                         .circleCrop()
@@ -48,6 +48,10 @@ class DetailActivity : AppCompatActivity() {
                     tvUsernameDetail.text = it.username
                     tvLocationDetail.text = it.location
                     tvCompanyDetail.text = it.company
+
+                    if (it.name.isNullOrEmpty()) tvNameDetail.text = resources.getString(R.string.unset_data)
+                    if (it.location.isNullOrEmpty()) tvLocationDetail.text = resources.getString(R.string.unset_data)
+                    if (it.company.isNullOrEmpty()) tvCompanyDetail.text = resources.getString(R.string.unset_data)
                 }
             }
         }
