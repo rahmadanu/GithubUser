@@ -25,6 +25,10 @@ class DetailActivity : AppCompatActivity() {
         _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mainViewModel.isLoadingDetail.observe(this) {
+            showLoading(it)
+        }
+
         mainViewModel.hasConnectionFailed.observe(this) {
             showConnectionFailed(it)
         }
@@ -35,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
         mainViewModel.findUserDetail(user!!)
         mainViewModel.getDetailUser().observe(this) {
             binding.apply {
-                 if (it != null) {
+                if (it != null) {
                     Glide.with(this@DetailActivity)
                         .load(it.avatarUrl)
                         .circleCrop()
@@ -66,6 +70,10 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0f
 
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showConnectionFailed(hasNoData: Boolean) {
