@@ -22,6 +22,9 @@ class MainViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _isLoadingDetail = MutableLiveData<Boolean>()
+    val isLoadingDetail: LiveData<Boolean> = _isLoadingDetail
+
     private val _hasNoData = MutableLiveData<Boolean>()
     val hasNoData: LiveData<Boolean> = _hasNoData
 
@@ -61,9 +64,11 @@ class MainViewModel: ViewModel() {
     }
 
     fun findUserDetail(username: String) {
+        _isLoadingDetail.value = true
         val client = ApiConfig.getApiService().getUserDetail(username)
         client.enqueue(object: Callback<Items> {
             override fun onResponse(call: Call<Items>, response: Response<Items>) {
+                _isLoadingDetail.value = false
                 _hasConnectionFailed.value = false
                 if (response.isSuccessful) {
                     userDetail.postValue(response.body())
@@ -73,6 +78,7 @@ class MainViewModel: ViewModel() {
             }
 
             override fun onFailure(call: Call<Items>, t: Throwable) {
+                _isLoadingDetail.value = false
                 _hasConnectionFailed.value = true
                 Log.e(TAG, "onFailure: ${t.message}")
             }
