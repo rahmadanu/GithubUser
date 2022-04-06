@@ -12,11 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUser">
         <activity
-            android:name=".view.DetailActivity"
-            android:exported="true" />
+            android:name=".ui.activity.SettingActivity"
+            android:parentActivityName=".ui.activity.MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
+        </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.activity.FavoriteActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.activity.DetailActivity"
             android:exported="true"
+            android:parentActivityName=".ui.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

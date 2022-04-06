@@ -1,17 +1,18 @@
-package com.android.githubuser.view
+package com.android.githubuser.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.githubuser.R
 import com.android.githubuser.databinding.ItemRowUserBinding
-import com.android.githubuser.model.Items
+import com.android.githubuser.data.remote.response.Items
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import java.util.*
+import com.bumptech.glide.request.RequestOptions
 import kotlin.collections.ArrayList
 
-class ListUserAdapter
-    : RecyclerView.Adapter<ListUserAdapter.ListUserHolder>() {
+class ListUserFollowAdapter : RecyclerView.Adapter<ListUserFollowAdapter.ListUserHolder>() {
 
     private lateinit var onItemClickCallBack: OnItemClickCallBack
 
@@ -34,11 +35,13 @@ class ListUserAdapter
             binding.apply {
                 Glide.with(itemView)
                     .load(user.avatarUrl)
+                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .circleCrop()
                     .into(ivAvatar)
                 tvUsername.text = user.username
-                tvLink.text = user.link
+                tvUrl.text = user.url
+                ivFavorite.visibility = View.GONE
             }
             binding.root.setOnClickListener {
                 onItemClickCallBack.onItemClicked(user)

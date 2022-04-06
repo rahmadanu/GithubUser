@@ -1,9 +1,10 @@
-package com.android.githubuser.repository.remote
+package com.android.githubuser.data.remote.retrofit
 
 import com.android.githubuser.BuildConfig
-import com.android.githubuser.model.Items
-import com.android.githubuser.model.UserResponse
+import com.android.githubuser.data.remote.response.Items
+import com.android.githubuser.data.remote.response.UserResponse
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -14,15 +15,15 @@ interface ApiService {
 
     @GET("search/users")
     @Headers("Authorization: token ${BuildConfig.GITHUB_TOKEN}")
-    fun getUserSearch(
+    suspend fun getUserSearch(
         @Query("q") username: String
-    ): Call<UserResponse>
+    ): UserResponse
 
     @GET("users/{username}")
     @Headers("Authorization: token ${BuildConfig.GITHUB_TOKEN}")
-    fun getUserDetail(
+    suspend fun getUserDetail(
         @Path("username") username: String
-    ): Call<Items>
+    ): Items
 
     @GET("users/{username}/followers")
     @Headers("Authorization: token ${BuildConfig.GITHUB_TOKEN}")

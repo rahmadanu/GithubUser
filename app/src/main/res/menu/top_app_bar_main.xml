@@ -9,5 +9,18 @@
         android:contentDescription="@string/content_description_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="collapseActionView|always" />
+    <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_favorite_yes"
+        android:title="@string/favorite"
+        android:contentDescription="@string/content_description_favorite"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/setting"
+        android:contentDescription="@string/content_description_setting"
+        app:showAsAction="ifRoom" />
 
 </menu>

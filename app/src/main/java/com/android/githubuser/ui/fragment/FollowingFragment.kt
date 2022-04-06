@@ -1,4 +1,4 @@
-package com.android.githubuser.view
+package com.android.githubuser.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.githubuser.MainViewModel
+import com.android.githubuser.data.remote.response.Items
 import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
-import com.android.githubuser.model.Items
+import com.android.githubuser.ui.activity.DetailActivity
+import com.android.githubuser.ui.adapter.ListUserFollowAdapter
+import com.android.githubuser.ui.viewmodel.FollowersFollowingViewModel
 
 class FollowingFragment : Fragment() {
     private var _binding: FragmentFollowersFollowingBinding? = null
     private val binding get() = _binding!!
-    private val mainViewModel by activityViewModels<MainViewModel>()
-    private lateinit var listUserAdapter: ListUserAdapter
+    private val followViewModel by activityViewModels<FollowersFollowingViewModel>()
+    private lateinit var listUserFollowAdapter: ListUserFollowAdapter
     private lateinit var username: String
 
     override fun onCreateView(
@@ -33,31 +35,31 @@ class FollowingFragment : Fragment() {
 
         showRecycleList()
 
-        mainViewModel.isLoading.observe(viewLifecycleOwner) {
+        followViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
 
-        mainViewModel.hasNoFollowing.observe(viewLifecycleOwner) {
+        followViewModel.hasNoFollowing.observe(viewLifecycleOwner) {
             showNoData(it)
         }
 
-        mainViewModel.findUserFollowing(username)
-        mainViewModel.getFollowingUser().observe(viewLifecycleOwner) {
+        followViewModel.findUserFollowing(username)
+        followViewModel.getFollowingUser().observe(viewLifecycleOwner) {
             if (it != null) {
-                listUserAdapter.setList(it)
+                listUserFollowAdapter.setList(it)
             }
         }
     }
 
     private fun showRecycleList() {
-        listUserAdapter = ListUserAdapter()
-        listUserAdapter.notifyDataSetChanged()
+        listUserFollowAdapter = ListUserFollowAdapter()
+        listUserFollowAdapter.notifyDataSetChanged()
         binding.apply {
             rvFollowers.layoutManager = LinearLayoutManager(requireContext())
             rvFollowers.setHasFixedSize(true)
-            rvFollowers.adapter = listUserAdapter
+            rvFollowers.adapter = listUserFollowAdapter
         }
-        listUserAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallBack {
+        listUserFollowAdapter.setOnItemClickCallback(object : ListUserFollowAdapter.OnItemClickCallBack {
             override fun onItemClicked(data: Items) {
                 Toast.makeText(requireActivity(), data.username, Toast.LENGTH_SHORT).show()
             }

@@ -1,8 +1,6 @@
-package com.android.githubuser.model
+package com.android.githubuser.data.remote.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 data class UserResponse(
 
@@ -43,5 +41,5 @@ data class Items(
 	val followersUrl: String,
 
 	@field:SerializedName("html_url")
-	val link: String
+	val url: String
 )

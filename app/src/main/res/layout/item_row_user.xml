@@ -35,7 +35,7 @@
         tools:text="@string/dummy_username" />
 
     <TextView
-        android:id="@+id/tv_link"
+        android:id="@+id/tv_url"
         style="@style/TextContent.Small.WithDrawable"
         android:layout_marginTop="8dp"
         android:textSize="12sp"
@@ -46,6 +46,20 @@
         app:layout_constraintTop_toBottomOf="@id/tv_name"
         app:drawableStartCompat="@drawable/ic_web_20"
         tools:text="https://github.com/sidiqpermana"/>
+    
+    <ImageView
+        android:id="@+id/iv_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:tag="Not Saved"
+        android:contentDescription="@string/favorite_user"
+        android:src="@drawable/ic_favorite_no"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="0dp"

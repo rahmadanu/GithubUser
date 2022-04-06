@@ -1,4 +1,4 @@
-package com.android.githubuser.repository.remote
+package com.android.githubuser.data.remote.retrofit
 
 import com.android.githubuser.BuildConfig
 import okhttp3.OkHttpClient

@@ -26,7 +26,27 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/not_found_data.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/menu/top_app_bar_detail.xml" value="0.18645833333333334" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/menu/top_app_bar_main.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_company.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_error.xml" value="0.154" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_error_outline_50.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_favorite_no.xml" value="0.154" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_favorite_yes.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.154" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_loading.xml" value="0.154" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_location.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_refresh_black.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_search.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_username.xml" value="0.104" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_web_20.xml" value="0.154" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/splash_image.xml" value="0.104" />
         <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_detail.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_favorite.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_main.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_setting.xml" value="0.1" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_followers_following.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/item_row_user.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/menu/top_app_bar_main.xml" value="0.23229166666666667" />
+        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/xml/setting_preference.xml" value="0.264" />
       </map>
     </option>
   </component>
