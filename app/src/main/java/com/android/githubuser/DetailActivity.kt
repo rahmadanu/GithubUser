@@ -11,15 +11,12 @@ import com.bumptech.glide.Glide
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-
-    companion object {
-        const val EXTRA_USER = "extra_user"
-    }
+    private var _binding: ActivityDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val user = intent.getParcelableExtra<User>(EXTRA_USER) as User
@@ -67,4 +64,12 @@ class DetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object {
+        const val EXTRA_USER = "extra_user"
+    }
 }

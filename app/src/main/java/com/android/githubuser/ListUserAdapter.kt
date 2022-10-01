@@ -13,8 +13,7 @@ class ListUserAdapter(private val listUser: ArrayList<User>) : RecyclerView.Adap
         this.onItemClickCallBack = onItemClickCallBack
     }
 
-    class ListUserHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
-    }
+    class ListUserHolder(var binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListUserHolder {
         val binding = ItemRowUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
