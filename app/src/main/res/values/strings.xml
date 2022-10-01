@@ -18,7 +18,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tab_text_1">Followers</string>
     <string name="tab_text_2">Following</string>
-    <string name="connection_failed">Koneksi Gagal :(\nPastikan terhubung ke internet!</string>
+    <string name="connection_failed">Koneksi Gagal :(</string>
     <string name="connection_lost">Koneksi terputus</string>
     <string name="no_data">Cari user terlebih dahulu</string>
     <string name="unset_data">Belum diatur</string>

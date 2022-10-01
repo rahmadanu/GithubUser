@@ -1,19 +1,20 @@
-package com.android.githubuser.view
+package com.android.githubuser.ui.following
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.githubuser.MainViewModel
+import com.android.githubuser.ui.main.MainViewModel
 import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
 import com.android.githubuser.model.Items
+import com.android.githubuser.ui.adapter.ListUserAdapter
+import com.android.githubuser.ui.detail.DetailActivity
 
-class FollowersFragment : Fragment() {
-
+class FollowingFragment : Fragment() {
     private var _binding: FragmentFollowersFollowingBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
@@ -21,8 +22,7 @@ class FollowersFragment : Fragment() {
     private lateinit var username: String
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFollowersFollowingBinding.inflate(inflater, container, false)
@@ -39,12 +39,12 @@ class FollowersFragment : Fragment() {
             showLoading(it)
         }
 
-        mainViewModel.hasNoFollowers.observe(viewLifecycleOwner) {
+        mainViewModel.hasNoFollowing.observe(viewLifecycleOwner) {
             showNoData(it)
         }
 
-        mainViewModel.findUserFollowers(username)
-        mainViewModel.getFollowersUser().observe(viewLifecycleOwner) {
+        mainViewModel.findUserFollowing(username)
+        mainViewModel.getFollowingUser().observe(viewLifecycleOwner) {
             if (it != null) {
                 listUserAdapter.setList(it)
             }

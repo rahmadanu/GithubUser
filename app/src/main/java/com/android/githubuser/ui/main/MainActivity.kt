@@ -1,4 +1,4 @@
-package com.android.githubuser.view
+package com.android.githubuser.ui.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -13,10 +13,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.githubuser.MainViewModel
 import com.android.githubuser.R
 import com.android.githubuser.databinding.ActivityMainBinding
 import com.android.githubuser.model.Items
+import com.android.githubuser.ui.detail.DetailActivity
+import com.android.githubuser.ui.adapter.ListUserAdapter
 
 class MainActivity : AppCompatActivity() {
 

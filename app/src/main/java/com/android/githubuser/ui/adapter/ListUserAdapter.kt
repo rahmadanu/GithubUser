@@ -1,4 +1,4 @@
-package com.android.githubuser.view
+package com.android.githubuser.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import com.android.githubuser.databinding.ItemRowUserBinding
 import com.android.githubuser.model.Items
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ListUserAdapter

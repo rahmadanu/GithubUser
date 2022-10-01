@@ -1,4 +1,4 @@
-package com.android.githubuser.repository.remote
+package com.android.githubuser.network.remote
 
 import com.android.githubuser.BuildConfig
 import com.android.githubuser.model.Items

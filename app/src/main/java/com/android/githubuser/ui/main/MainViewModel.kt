@@ -1,4 +1,4 @@
-package com.android.githubuser
+package com.android.githubuser.ui.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.githubuser.model.Items
 import com.android.githubuser.model.UserResponse
-import com.android.githubuser.repository.remote.ApiConfig
+import com.android.githubuser.network.remote.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

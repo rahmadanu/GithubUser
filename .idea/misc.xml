@@ -8,29 +8,18 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1685" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_location.xml" value="0.169" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_repository.xml" value="0.169" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_search_white_24.xml" value="0.1355" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_share.xml" value="0.1355" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/ic_web_24.xml" value="0.1" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/drawable/splash_image.xml" value="0.1685" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_detail.xml" value="0.22" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_detail2.xml" value="0.1" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_detail.xml" value="0.33" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_main.xml" value="0.16847826086956522" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_detail.xml" value="0.22" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_followers.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_followers_following.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_following.xml" value="0.17239583333333333" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/fragment_home.xml" value="0.18" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/item_row_list.xml" value="0.16847826086956522" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/item_row_user.xml" value="0.25" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/item_user_on_search.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/not_found_data.xml" value="0.18645833333333334" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/layout/item_row_user.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/menu/top_app_bar_detail.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/GithubUser/app/src/main/res/menu/top_app_bar_main.xml" value="0.18645833333333334" />
-        <entry key="..\:/Users/sadew/AndroidStudioProjects/GithubUser/app/src/main/res/layout/activity_detail.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
