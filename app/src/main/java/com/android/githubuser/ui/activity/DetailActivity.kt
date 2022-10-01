@@ -1,25 +1,21 @@
 package com.android.githubuser.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.android.githubuser.R
 import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.databinding.ActivityDetailBinding
 import com.android.githubuser.ui.adapter.SectionPagerAdapter
-import com.android.githubuser.ui.viewmodel.MainViewModel
 import com.android.githubuser.ui.other.ViewModelFactory
 import com.android.githubuser.ui.viewmodel.DetailViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -30,6 +26,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var detailViewModel: DetailViewModel
 
     private lateinit var user: UserEntity
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +55,23 @@ class DetailActivity : AppCompatActivity() {
         }
 
         detailViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[DetailViewModel::class.java]
-/*        detailViewModel.isFavoriteState.observe(this) { isFavorite ->
-            showFavoriteState(isFavorite)
-            Log.d("DetailActivity", "onCreate: $isFavorite")
-        }*/
+        detailViewModel.isFavorite(user.username).observe(this@DetailActivity) {
+            isFavorite = it
+            showFavoriteState()
+        }
 
-        detailViewModel.isFavorite(user.username)
-        detailViewModel.isFavorites.observe(this@DetailActivity) {
-            showFavoriteState(it)
+        binding.fabFavorite.setOnClickListener {
+            if (isFavorite) {
+                detailViewModel.deleteUser(user)
+                isFavorite = false
+                showFavoriteState()
+                showSnackbar(getString(R.string.user_deleted_from_favorite))
+            } else {
+                detailViewModel.insertUser(user)
+                isFavorite = true
+                showFavoriteState()
+                showSnackbar(getString(R.string.user_added_to_favorite))
+            }
         }
 
         val bundle = Bundle()
@@ -85,29 +91,22 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title = "Detail User"
     }
 
-    private fun showFavoriteState(isFavorite: Boolean) {
-        binding.apply {
-            fabFavorite.setOnClickListener {
-                if (isFavorite) {
-                    detailViewModel.deleteUser(user)
-                } else {
-                    detailViewModel.insertUser(user)
-                }
-                detailViewModel.isFavorite(user.username)
-                observeViewModel()
-            }
-            if (isFavorite) {
-                fabFavorite.setImageResource(R.drawable.ic_favorite_yes)
-            } else {
-                fabFavorite.setImageResource(R.drawable.ic_favorite_no)
-            }
+    private fun showFavoriteState() {
+        if (isFavorite) {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_yes)
+        } else {
+            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_no)
         }
     }
 
-    private fun observeViewModel() {
-        detailViewModel.isFavorites.observe(this@DetailActivity) {
-            showFavoriteState(it)
-        }
+    private fun showSnackbar(message: String) {
+        Snackbar.make(findViewById(R.id.activity_detail), message, Snackbar.LENGTH_SHORT)
+            .setAction("SEE") {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                startActivity(intent)
+            }
+            .show()
     }
 
     override fun onDestroy() {

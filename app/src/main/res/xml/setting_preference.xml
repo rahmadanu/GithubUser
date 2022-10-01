@@ -11,4 +11,19 @@
         app:iconSpaceReserved="false"
         />
 
+    <PreferenceCategory
+        app:title="@string/favorite"
+        app:iconSpaceReserved="false">
+    </PreferenceCategory>
+
+    <PreferenceScreen
+        android:key="@string/app_name"
+        android:title="@string/app_name"
+        app:iconSpaceReserved="false">
+
+        <intent
+            android:action="com.android.githubuser.ui.activity.FavoriteActivity" />
+    </PreferenceScreen>
+
+
 </PreferenceScreen>

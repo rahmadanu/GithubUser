@@ -17,7 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import okhttp3.internal.notifyAll
 
-class ListUserAdapter(private val onFavoriteClick: (UserEntity) -> Unit) : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
+class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
     DIFF_CALLBACK
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -28,21 +28,9 @@ class ListUserAdapter(private val onFavoriteClick: (UserEntity) -> Unit) : ListA
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = getItem(position)
         holder.bind(user)
-
-        val ivFavorite = holder.binding.ivFavorite
-
-        if (user.isFavorite) {
-            ivFavorite.setImageDrawable(ContextCompat.getDrawable(ivFavorite.context, R.drawable.ic_favorite_yes))
-        } else {
-            ivFavorite.setImageDrawable(ContextCompat.getDrawable(ivFavorite.context, R.drawable.ic_favorite_no))
-        }
-
-        ivFavorite.setOnClickListener {
-            onFavoriteClick(user)
-        }
     }
 
-    class UserViewHolder(val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
+    class UserViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(user: UserEntity) {
             binding.apply {
                 tvUsername.text = user.username

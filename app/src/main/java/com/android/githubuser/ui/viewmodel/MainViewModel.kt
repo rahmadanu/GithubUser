@@ -11,18 +11,6 @@ class MainViewModel(private val userRepository: UserRepository): ViewModel() {
 
     fun getUser(query: String) = userRepository.getUser(query)
 
-    fun insertUser(user: UserEntity) {
-        viewModelScope.launch {
-            userRepository.insertUser(user, true)
-        }
-    }
-
-    fun deleteUser(user: UserEntity) {
-        viewModelScope.launch {
-            userRepository.deleteUser(user, false)
-        }
-    }
-
     companion object {
         private const val TAG ="MainViewModel"
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.githubuser.R
 import com.android.githubuser.databinding.ActivityFavoriteBinding
 import com.android.githubuser.ui.adapter.ListUserAdapter
 import com.android.githubuser.ui.viewmodel.FavoriteViewModel
@@ -25,14 +26,9 @@ class FavoriteActivity : AppCompatActivity() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         favoriteViewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
 
-        listUserAdapter = ListUserAdapter { user ->
-            if (user.isFavorite) {
-                favoriteViewModel.deleteUser(user)
-            }
-        }
+        listUserAdapter = ListUserAdapter()
 
         favoriteViewModel.getFavoriteUser().observe(this@FavoriteActivity) { favoriteUser ->
-            showLoading(false)
             if (favoriteUser.isNullOrEmpty()) {
                 showNoData(true)
             } else {
@@ -51,10 +47,6 @@ class FavoriteActivity : AppCompatActivity() {
 
     private fun showNoData(hasData: Boolean) {
         binding.tvNoData.visibility = if (hasData) View.VISIBLE else View.GONE
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

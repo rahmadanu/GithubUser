@@ -49,16 +49,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
         showRecycleList()
-        val pref = SettingPreference.getInstance(dataStore)
-        settingViewModel = ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
-        settingViewModel.getThemeSetting().observe(this) {
-                isDarkModeActive: Boolean ->
-            if (isDarkModeActive) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
-        }
+        setThemeSetting()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,31 +64,7 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                mainViewModel.getUser(query).observe(this@MainActivity) { result ->
-                    if (result != null) {
-                        when (result) {
-                            is Result.Loading -> {
-                                showLoading(true)
-                                showNoData(false)
-                            }
-                            is Result.Success -> {
-                                showLoading(false)
-                                val userData = result.data
-                                if (userData.isNullOrEmpty()) {
-                                    showNoData(true)
-                                    Toast.makeText(this@MainActivity, "User tidak ditemukan", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    showNoData(false)
-                                }
-                                listUserAdapter.submitList(userData)
-                            }
-                            is Result.Error -> {
-                                showLoading(true)
-                                Toast.makeText(this@MainActivity, R.string.connection_failed, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
+                searchUser(query)
                 searchView.clearFocus()
                 return true
             }
@@ -141,19 +108,53 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun searchUser(query: String) {
+        mainViewModel.getUser(query).observe(this@MainActivity) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        showLoading(true)
+                        showNoData(false)
+                    }
+                    is Result.Success -> {
+                        showLoading(false)
+                        val userData = result.data
+                        if (userData.isNullOrEmpty()) {
+                            showNoData(true)
+                            Toast.makeText(this@MainActivity, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
+                        } else {
+                            showNoData(false)
+                        }
+                        listUserAdapter.submitList(userData)
+                    }
+                    is Result.Error -> {
+                        showLoading(true)
+                        Toast.makeText(this@MainActivity, R.string.connection_failed, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
    private fun showRecycleList() {
-       listUserAdapter = ListUserAdapter { user ->
-           if (user.isFavorite) {
-               mainViewModel.deleteUser(user)
-           } else {
-               mainViewModel.insertUser(user)
-           }
-           listUserAdapter.notifyDataSetChanged() //saya terpaksa pakai notifyDataSetChanged() karena DiffUtil tidak bisa bekerja
-       }
+       listUserAdapter = ListUserAdapter()
        binding.rvUser.layoutManager = LinearLayoutManager(this)
        binding.rvUser.setHasFixedSize(true)
        binding.rvUser.adapter = listUserAdapter
    }
+
+    private fun setThemeSetting() {
+        val pref = SettingPreference.getInstance(dataStore)
+        settingViewModel = ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
+        settingViewModel.getThemeSetting().observe(this) {
+                isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+    }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

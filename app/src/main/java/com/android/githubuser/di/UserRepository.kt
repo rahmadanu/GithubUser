@@ -12,9 +12,6 @@ class UserRepository private constructor(
     private val apiService: ApiService,
     private val userDao: UserDao
 ){
-    private var _isFavoriteState = MutableLiveData<Boolean>()
-    val isFavoriteState: LiveData<Boolean> = _isFavoriteState
-
     fun getUser(query: String): LiveData<Result<List<UserEntity>>> = liveData {
         emit(Result.Loading)
         try {
@@ -41,7 +38,7 @@ class UserRepository private constructor(
             emitSource(MutableLiveData(Result.Success(userList)))
 
         } catch (e: Exception) {
-            Log.d("UserRepository", "getUser: ${e.message}")
+            Log.d(TAG, "getUser: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
    }
@@ -62,11 +59,6 @@ class UserRepository private constructor(
 
     fun getFavoriteUser(): LiveData<List<UserEntity>> {
         return userDao.getFavoriteUser()
-    }
-
-    suspend fun setFavoriteUser(user: UserEntity, favoriteState: Boolean) {
-        user.isFavorite = favoriteState
-        userDao.updateUser(user)
     }
 
     companion object {

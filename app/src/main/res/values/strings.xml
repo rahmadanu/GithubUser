@@ -19,17 +19,20 @@
     <string name="tab_text_1">Followers</string>
     <string name="tab_text_2">Following</string>
     <string name="connection_failed">Terjadi kesalahan\nPastikan terhubung ke internet!</string>
-    <string name="connection_lost">Koneksi terputus</string>
     <string name="no_data">Selamat datang di aplikasi Github User\n\nSilakan cari user yang diinginkan</string>
     <string name="unset_data">Belum diatur</string>
     <string name="favorite">Favorite</string>
-    <string name="favorite_user">Favorite User?</string>
     <string name="content_description_favorite">Berisi list user favorite</string>
     <string name="no_favorite_user">Tidak ada favorite user</string>
     <string name="key_dark_mode">dark_mode</string>
     <string name="dark_mode">Dark mode</string>
     <string name="setting">Setting</string>
     <string name="content_description_setting">Berisi pengaturan tema</string>
+    <string name="user_not_found">User tidak ditemukan</string>
+    <string name="user_deleted_from_favorite">User dihapus dari daftar favorite</string>
+    <string name="user_added_to_favorite">User ditambah ke daftar favorite</string>
+
+    <string name="username">(%1$s)</string>
 
 </resources>
 
