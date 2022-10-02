@@ -33,6 +33,8 @@
     <string name="user_added_to_favorite">User ditambah ke daftar favorite</string>
 
     <string name="username">(%1$s)</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_detail_user">Detail User</string>
 
 </resources>
 

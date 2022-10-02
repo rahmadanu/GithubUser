@@ -88,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Detail User"
+        supportActionBar?.title = getString(R.string.title_detail_user)
     }
 
     private fun showFavoriteState() {

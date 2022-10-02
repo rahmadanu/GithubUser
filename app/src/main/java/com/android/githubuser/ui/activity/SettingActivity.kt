@@ -22,7 +22,7 @@ class SettingActivity : AppCompatActivity() {
             .add(R.id.activity_setting, SettingPreferenceFragment())
             .commit()
 
-        supportActionBar?.title = "Setting"
+        supportActionBar?.title = getString(R.string.title_setting)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }

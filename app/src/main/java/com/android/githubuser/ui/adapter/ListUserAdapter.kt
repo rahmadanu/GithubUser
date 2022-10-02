@@ -64,4 +64,8 @@ class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
 
             }
     }
+
+    interface OnItemClickListener {
+        fun onItemClicked(user: UserEntity)
+    }
 }
