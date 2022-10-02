@@ -15,9 +15,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.R
 import com.android.githubuser.databinding.ActivityMainBinding
-import com.android.githubuser.model.Items
-import com.android.githubuser.ui.detail.DetailActivity
+import com.android.githubuser.network.model.Items
 import com.android.githubuser.ui.adapter.ListUserAdapter
+import com.android.githubuser.ui.detail.DetailActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -95,7 +95,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showRecycleList() {
         listUserAdapter = ListUserAdapter()
-        listUserAdapter.notifyDataSetChanged()
         binding.apply {
             rvUser.layoutManager = LinearLayoutManager(this@MainActivity)
             rvUser.setHasFixedSize(true)
@@ -120,6 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNoData(hasNoData: Boolean) {
         binding.tvNotFoundData.visibility = if (hasNoData) View.VISIBLE else View.GONE
+        binding.tvNoData.visibility = View.GONE
     }
 
     override fun onDestroy() {

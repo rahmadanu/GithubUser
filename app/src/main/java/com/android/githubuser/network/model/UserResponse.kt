@@ -1,4 +1,4 @@
-package com.android.githubuser.model
+package com.android.githubuser.network.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -10,6 +10,7 @@ data class UserResponse(
 	val items: ArrayList<Items>
 )
 
+@Parcelize
 data class Items(
 
 	@field:SerializedName("login")
@@ -44,4 +45,4 @@ data class Items(
 
 	@field:SerializedName("html_url")
 	val link: String
-)
+): Parcelable

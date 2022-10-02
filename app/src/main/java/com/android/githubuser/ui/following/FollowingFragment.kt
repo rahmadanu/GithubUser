@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.ui.main.MainViewModel
 import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
-import com.android.githubuser.model.Items
+import com.android.githubuser.network.model.Items
 import com.android.githubuser.ui.adapter.ListUserAdapter
 import com.android.githubuser.ui.detail.DetailActivity
 

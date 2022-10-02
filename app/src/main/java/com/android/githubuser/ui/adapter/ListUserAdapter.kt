@@ -2,9 +2,11 @@ package com.android.githubuser.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.android.githubuser.databinding.ItemRowUserBinding
-import com.android.githubuser.model.Items
+import com.android.githubuser.network.model.Items
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import kotlin.collections.ArrayList
@@ -18,14 +20,21 @@ class ListUserAdapter
         this.onItemClickCallBack = onItemClickCallBack
     }
 
-    private val list = ArrayList<Items>()
-
-    fun setList(user: ArrayList<Items>?) {
-        list.clear()
-        if (user != null) {
-            list.addAll(user)
+    private val diffCallback = object : DiffUtil.ItemCallback<Items>() {
+        override fun areItemsTheSame(oldItem: Items, newItem: Items): Boolean {
+            return oldItem.username == newItem.username
         }
-        notifyDataSetChanged()
+
+        @Suppress("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: Items, newItem: Items): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    fun setList(user: ArrayList<Items>) {
+        differ.submitList(user)
     }
 
     inner class ListUserHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -51,15 +60,14 @@ class ListUserAdapter
     }
 
     override fun onBindViewHolder(holder: ListUserHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(differ.currentList[position])
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return differ.currentList.size
     }
 
     interface OnItemClickCallBack {
         fun onItemClicked(data: Items)
     }
-
 }

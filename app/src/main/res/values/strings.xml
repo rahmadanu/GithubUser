@@ -22,6 +22,8 @@
     <string name="connection_lost">Koneksi terputus</string>
     <string name="no_data">Cari user terlebih dahulu</string>
     <string name="unset_data">Belum diatur</string>
+    <string name="share">Share</string>
+    <string name="user_details">User Details\n\nName: %1$s (%2$s)\nFollowers: %3$s\nFollowing: %4$s\nRepository: %5$s\nLocation: %6$s\nCompany: %7$s</string>
 
 </resources>
 

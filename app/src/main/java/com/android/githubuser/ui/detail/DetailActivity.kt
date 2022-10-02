@@ -1,15 +1,18 @@
 package com.android.githubuser.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.android.githubuser.ui.main.MainViewModel
 import com.android.githubuser.R
 import com.android.githubuser.databinding.ActivityDetailBinding
 import com.android.githubuser.ui.adapter.SectionPagerAdapter
+import com.android.githubuser.ui.main.MainViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.tabs.TabLayout
@@ -48,15 +51,18 @@ class DetailActivity : AppCompatActivity() {
                         .into(ivAvatarDetail)
                     tvNameDetail.text = it.name
                     tvFollowersDetail.text = it.followers.toString()
-                    tvFollowingDetail.text  = it.following.toString()
+                    tvFollowingDetail.text = it.following.toString()
                     tvRepositoryDetail.text = it.repository.toString()
                     tvUsernameDetail.text = it.username
                     tvLocationDetail.text = it.location
                     tvCompanyDetail.text = it.company
 
-                    if (it.name.isNullOrEmpty()) tvNameDetail.text = resources.getString(R.string.unset_data)
-                    if (it.location.isNullOrEmpty()) tvLocationDetail.text = resources.getString(R.string.unset_data)
-                    if (it.company.isNullOrEmpty()) tvCompanyDetail.text = resources.getString(R.string.unset_data)
+                    if (it.name.isNullOrEmpty()) tvNameDetail.text =
+                        resources.getString(R.string.unset_data)
+                    if (it.location.isNullOrEmpty()) tvLocationDetail.text =
+                        resources.getString(R.string.unset_data)
+                    if (it.company.isNullOrEmpty()) tvCompanyDetail.text =
+                        resources.getString(R.string.unset_data)
                 }
             }
         }
@@ -65,7 +71,7 @@ class DetailActivity : AppCompatActivity() {
         viewPager.adapter = sectionViewPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
 
-        TabLayoutMediator(tabs, viewPager) {tab, position ->
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
@@ -79,6 +85,34 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showConnectionFailed(hasNoData: Boolean) {
         binding.tvConnectionFailed.visibility = if (hasNoData) View.VISIBLE else View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_app_bar_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> {
+                val sendUserDetails = getString(
+                    R.string.user_details,
+                    binding.tvNameDetail.text,
+                    binding.tvUsernameDetail.text,
+                    binding.tvFollowersDetail.text,
+                    binding.tvFollowingDetail.text,
+                    binding.tvRepositoryDetail.text,
+                    binding.tvLocationDetail.text,
+                    binding.tvCompanyDetail.text
+                )
+                val intent = Intent(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, sendUserDetails)
+                    .setType("text/plain")
+
+                startActivity(Intent.createChooser(intent, "Send user details"))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

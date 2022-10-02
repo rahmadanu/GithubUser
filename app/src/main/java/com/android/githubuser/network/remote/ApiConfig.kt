@@ -1,6 +1,7 @@
 package com.android.githubuser.network.remote
 
 import com.android.githubuser.BuildConfig
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,7 +18,13 @@ class ApiConfig {
             } else {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
             }
+            val authInterceptor = Interceptor {
+                val builder = it.request().newBuilder()
+                builder.header("Auth-token", BuildConfig.GITHUB_TOKEN)
+                it.proceed(builder.build())
+            }
             val client = OkHttpClient.Builder()
+                .addInterceptor(authInterceptor)
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
