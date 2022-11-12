@@ -17,6 +17,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.R
+import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.di.Result
 import com.android.githubuser.databinding.ActivityMainBinding
 import com.android.githubuser.ui.adapter.ListUserAdapter
@@ -141,6 +142,14 @@ class MainActivity : AppCompatActivity() {
        binding.rvUser.layoutManager = LinearLayoutManager(this)
        binding.rvUser.setHasFixedSize(true)
        binding.rvUser.adapter = listUserAdapter
+
+       listUserAdapter.setOnClickListener(object : ListUserAdapter.OnItemClickListener {
+           override fun onItemClicked(user: UserEntity) {
+               val intent = Intent(this@MainActivity, DetailActivity::class.java)
+               intent.putExtra(DetailActivity.EXTRA_USER, user)
+               startActivity(intent)
+           }
+       })
    }
 
     private fun setThemeSetting() {

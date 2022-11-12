@@ -2,6 +2,8 @@ package com.android.githubuser.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
 
     private var _binding: ActivityDetailBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var detailViewModel: DetailViewModel
 
     private lateinit var user: UserEntity
@@ -107,6 +110,34 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             .show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_app_bar_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.share -> {
+                val sendUserDetails = getString(
+                    R.string.user_details,
+                    binding.tvNameDetail.text,
+                    binding.tvUsernameDetail.text,
+                    binding.tvFollowersDetail.text,
+                    binding.tvFollowingDetail.text,
+                    binding.tvRepositoryDetail.text,
+                    binding.tvLocationDetail.text,
+                    binding.tvCompanyDetail.text
+                )
+                val intent = Intent(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, sendUserDetails)
+                    .setType("text/plain")
+
+                startActivity(Intent.createChooser(intent, "Send user details"))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

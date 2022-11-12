@@ -35,6 +35,8 @@
     <string name="username">(%1$s)</string>
     <string name="title_setting">Setting</string>
     <string name="title_detail_user">Detail User</string>
+    <string name="title_share">Share</string>
+    <string name="user_details">User Details\n\nName: %1$s (%2$s)\nFollowers: %3$s\nFollowing: %4$s\nRepository: %5$s\nLocation: %6$s\nCompany: %7$s</string>
 
 </resources>
 

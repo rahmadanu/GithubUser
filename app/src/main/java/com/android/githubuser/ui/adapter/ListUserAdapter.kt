@@ -20,6 +20,12 @@ import okhttp3.internal.notifyAll
 class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
     DIFF_CALLBACK
 ) {
+    private var listener: OnItemClickListener? = null
+
+    fun setOnClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemRowUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserViewHolder(binding)
@@ -30,7 +36,7 @@ class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
         holder.bind(user)
     }
 
-    class UserViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class UserViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(user: UserEntity) {
             binding.apply {
                 tvUsername.text = user.username
@@ -42,10 +48,8 @@ class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
                     .circleCrop()
                     .into(ivAvatar)
             }
-            itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailActivity::class.java)
-                intent.putExtra(DetailActivity.EXTRA_USER, user)
-                itemView.context.startActivity(intent)
+            binding.root.setOnClickListener {
+                listener?.onItemClicked(user)
             }
         }
     }

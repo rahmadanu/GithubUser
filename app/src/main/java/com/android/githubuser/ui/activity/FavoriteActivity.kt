@@ -1,11 +1,13 @@
 package com.android.githubuser.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.R
+import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.databinding.ActivityFavoriteBinding
 import com.android.githubuser.ui.adapter.ListUserAdapter
 import com.android.githubuser.ui.viewmodel.FavoriteViewModel
@@ -40,6 +42,13 @@ class FavoriteActivity : AppCompatActivity() {
         binding.rvUser.layoutManager = LinearLayoutManager(this)
         binding.rvUser.setHasFixedSize(true)
         binding.rvUser.adapter = listUserAdapter
+        listUserAdapter.setOnClickListener(object : ListUserAdapter.OnItemClickListener {
+            override fun onItemClicked(user: UserEntity) {
+                val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_USER, user)
+                startActivity(intent)
+            }
+        })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Favorite User"
