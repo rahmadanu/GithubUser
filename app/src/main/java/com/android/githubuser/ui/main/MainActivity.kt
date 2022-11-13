@@ -70,23 +70,28 @@ class MainActivity : AppCompatActivity() {
                 searchView.clearFocus()
                 return true
             }
+
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }
         })
 
-        searchMenuItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                binding.tvNoData.visibility = View.GONE
-                binding.rvUser.visibility = View.VISIBLE
+        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
+                with(binding) {
+                    tvNoData.visibility = View.GONE
+                    rvUser.visibility = View.VISIBLE
+                }
                 return true
             }
 
-            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                binding.rvUser.visibility = View.GONE
-                binding.tvNoData.visibility = View.VISIBLE
-                binding.tvNotFoundData.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
+            override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+                with(binding) {
+                    rvUser.visibility = View.GONE
+                    tvNoData.visibility = View.VISIBLE
+                    tvNotFoundData.visibility = View.GONE
+                    progressBar.visibility = View.GONE
+                }
                 return true
             }
         })

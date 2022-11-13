@@ -7,13 +7,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.githubuser.ui.followers.FollowersFragment
 import com.android.githubuser.ui.following.FollowingFragment
 
-class SectionPagerAdapter(fragment: FragmentActivity, data: Bundle) : FragmentStateAdapter(fragment) {
+class SectionPagerAdapter(fragment: FragmentActivity, data: Bundle) :
+    FragmentStateAdapter(fragment) {
 
     private var fragmentBundle: Bundle = data
 
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
-        fragment = when(position) {
+        fragment = when (position) {
             0 -> FollowersFragment()
             1 -> FollowingFragment()
             else -> fragment
@@ -23,7 +24,10 @@ class SectionPagerAdapter(fragment: FragmentActivity, data: Bundle) : FragmentSt
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return TOTAL_FRAGMENT
     }
 
+    companion object {
+        private const val TOTAL_FRAGMENT = 2
+    }
 }

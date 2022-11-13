@@ -9,7 +9,6 @@ import com.android.githubuser.databinding.ItemRowUserBinding
 import com.android.githubuser.network.model.Items
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import kotlin.collections.ArrayList
 
 class ListUserAdapter
     : RecyclerView.Adapter<ListUserAdapter.ListUserHolder>() {
@@ -37,7 +36,8 @@ class ListUserAdapter
         differ.submitList(user)
     }
 
-    inner class ListUserHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ListUserHolder(private val binding: ItemRowUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(user: Items) {
             binding.apply {
                 Glide.with(itemView)

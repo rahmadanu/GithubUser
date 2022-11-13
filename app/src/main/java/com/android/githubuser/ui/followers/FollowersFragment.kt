@@ -2,17 +2,17 @@ package com.android.githubuser.ui.followers
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.githubuser.ui.main.MainViewModel
 import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
 import com.android.githubuser.network.model.Items
 import com.android.githubuser.ui.adapter.ListUserAdapter
 import com.android.githubuser.ui.detail.DetailActivity
+import com.android.githubuser.ui.main.MainViewModel
 
 class FollowersFragment : Fragment() {
 

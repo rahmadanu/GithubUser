@@ -12,7 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MainViewModel: ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val listUser = MutableLiveData<ArrayList<Items>>()
     private val userDetail = MutableLiveData<Items>()
@@ -41,7 +41,7 @@ class MainViewModel: ViewModel() {
         _isLoading.value = true
         _hasNoData.value = false
         val client = ApiConfig.getApiService().getUserSearch(query)
-        client.enqueue(object: Callback<UserResponse> {
+        client.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
@@ -66,7 +66,7 @@ class MainViewModel: ViewModel() {
     fun findUserDetail(username: String) {
         _isLoadingDetail.value = true
         val client = ApiConfig.getApiService().getUserDetail(username)
-        client.enqueue(object: Callback<Items> {
+        client.enqueue(object : Callback<Items> {
             override fun onResponse(call: Call<Items>, response: Response<Items>) {
                 _isLoadingDetail.value = false
                 _hasConnectionFailed.value = false
@@ -89,8 +89,11 @@ class MainViewModel: ViewModel() {
         _isLoading.value = true
         _hasNoFollowers.value = false
         val client = ApiConfig.getApiService().getUserFollowers(username)
-        client.enqueue(object: Callback<ArrayList<Items>> {
-            override fun onResponse(call: Call<ArrayList<Items>>, response: Response<ArrayList<Items>>) {
+        client.enqueue(object : Callback<ArrayList<Items>> {
+            override fun onResponse(
+                call: Call<ArrayList<Items>>,
+                response: Response<ArrayList<Items>>
+            ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     userFollowers.postValue(response.body())
@@ -114,8 +117,11 @@ class MainViewModel: ViewModel() {
         _isLoading.value = true
         _hasNoFollowing.value = false
         val client = ApiConfig.getApiService().getUserFollowing(username)
-        client.enqueue(object: Callback<ArrayList<Items>> {
-            override fun onResponse(call: Call<ArrayList<Items>>, response: Response<ArrayList<Items>>) {
+        client.enqueue(object : Callback<ArrayList<Items>> {
+            override fun onResponse(
+                call: Call<ArrayList<Items>>,
+                response: Response<ArrayList<Items>>
+            ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     userFollowing.postValue(response.body())
@@ -152,6 +158,6 @@ class MainViewModel: ViewModel() {
     }
 
     companion object {
-        private const val TAG ="MainViewModel"
+        private const val TAG = "MainViewModel"
     }
 }
