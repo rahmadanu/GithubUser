@@ -1,13 +1,12 @@
 package com.android.githubuser.ui.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.di.UserRepository
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val userRepository: UserRepository): ViewModel() {
+class DetailViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun isFavorite(username: String) = userRepository.isFavorite(username)
 

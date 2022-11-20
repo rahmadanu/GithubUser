@@ -1,25 +1,23 @@
 package com.android.githubuser.ui.adapter
 
-import android.content.Intent
-import android.content.res.Resources
+import android.content.Context
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.githubuser.R
 import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.databinding.ItemRowUserBinding
-import com.android.githubuser.ui.activity.DetailActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
-import okhttp3.internal.notifyAll
 
-class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
-    DIFF_CALLBACK
-) {
+class ListUserAdapter(val context: Context) :
+    ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
+        DIFF_CALLBACK
+    ) {
     private var listener: OnItemClickListener? = null
 
     fun setOnClickListener(listener: OnItemClickListener) {
@@ -33,20 +31,42 @@ class ListUserAdapter : ListAdapter<UserEntity, ListUserAdapter.UserViewHolder>(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = getItem(position)
-        holder.bind(user)
+        holder.bind(user, context)
     }
 
-    inner class UserViewHolder(private val binding: ItemRowUserBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(user: UserEntity) {
+    inner class UserViewHolder(private val binding: ItemRowUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(user: UserEntity, context: Context) {
             binding.apply {
                 tvUsername.text = user.username
                 tvUrl.text = user.url
-                Glide.with(itemView.context)
-                    .load(user.avatarUrl)
-                    .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .circleCrop()
-                    .into(ivAvatar)
+
+                when (context.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        Glide.with(itemView.context)
+                            .load(user.avatarUrl)
+                            .apply(
+                                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                                    .error(R.drawable.ic_error)
+                            )
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .placeholder(R.color.grey_800)
+                            .circleCrop()
+                            .into(ivAvatar)
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        Glide.with(itemView.context)
+                            .load(user.avatarUrl)
+                            .apply(
+                                RequestOptions.placeholderOf(R.drawable.ic_loading)
+                                    .error(R.drawable.ic_error)
+                            )
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .circleCrop()
+                            .into(ivAvatar)
+                    }
+                    Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+                }
             }
             binding.root.setOnClickListener {
                 listener?.onItemClicked(user)

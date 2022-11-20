@@ -1,34 +1,34 @@
 package com.android.githubuser.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.R
 import com.android.githubuser.data.local.entity.UserEntity
 import com.android.githubuser.databinding.ActivityFavoriteBinding
 import com.android.githubuser.ui.adapter.ListUserAdapter
-import com.android.githubuser.ui.viewmodel.FavoriteViewModel
 import com.android.githubuser.ui.other.ViewModelFactory
+import com.android.githubuser.ui.viewmodel.FavoriteViewModel
 
 class FavoriteActivity : AppCompatActivity() {
 
     private var _binding: ActivityFavoriteBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var listUserAdapter: ListUserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityFavoriteBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         favoriteViewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
 
-        listUserAdapter = ListUserAdapter()
+        listUserAdapter = ListUserAdapter(this@FavoriteActivity)
 
         favoriteViewModel.getFavoriteUser().observe(this@FavoriteActivity) { favoriteUser ->
             if (favoriteUser.isNullOrEmpty()) {
@@ -39,9 +39,12 @@ class FavoriteActivity : AppCompatActivity() {
             listUserAdapter.submitList(favoriteUser)
         }
 
-        binding.rvUser.layoutManager = LinearLayoutManager(this)
-        binding.rvUser.setHasFixedSize(true)
-        binding.rvUser.adapter = listUserAdapter
+        binding?.apply {
+            rvUser.layoutManager = LinearLayoutManager(this@FavoriteActivity)
+            rvUser.setHasFixedSize(true)
+            rvUser.adapter = listUserAdapter
+        }
+
         listUserAdapter.setOnClickListener(object : ListUserAdapter.OnItemClickListener {
             override fun onItemClicked(user: UserEntity) {
                 val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
@@ -51,11 +54,11 @@ class FavoriteActivity : AppCompatActivity() {
         })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Favorite User"
+        supportActionBar?.title = getString(R.string.title_favorite_user)
     }
 
     private fun showNoData(hasData: Boolean) {
-        binding.tvNoData.visibility = if (hasData) View.VISIBLE else View.GONE
+        binding?.tvNoData?.visibility = if (hasData) View.VISIBLE else View.GONE
     }
 
     override fun onDestroy() {

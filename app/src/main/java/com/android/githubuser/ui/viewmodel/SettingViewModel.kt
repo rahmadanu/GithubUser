@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.android.githubuser.ui.other.SettingPreference
 import kotlinx.coroutines.launch
 
-class SettingViewModel(private val pref: SettingPreference): ViewModel() {
+class SettingViewModel(private val pref: SettingPreference) : ViewModel() {
 
     fun getThemeSetting(): LiveData<Boolean> {
         return pref.getThemeSetting().asLiveData()

@@ -18,13 +18,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.githubuser.R
 import com.android.githubuser.data.local.entity.UserEntity
-import com.android.githubuser.di.Result
 import com.android.githubuser.databinding.ActivityMainBinding
+import com.android.githubuser.di.Result
 import com.android.githubuser.ui.adapter.ListUserAdapter
 import com.android.githubuser.ui.other.SettingPreference
 import com.android.githubuser.ui.other.SettingViewModelFactory
-import com.android.githubuser.ui.viewmodel.MainViewModel
 import com.android.githubuser.ui.other.ViewModelFactory
+import com.android.githubuser.ui.viewmodel.MainViewModel
 import com.android.githubuser.ui.viewmodel.SettingViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "Settings")
@@ -32,7 +32,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private lateinit var mainViewModel: MainViewModel
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setTheme(R.style.Theme_GithubUser)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
@@ -69,25 +69,30 @@ class MainActivity : AppCompatActivity() {
                 searchView.clearFocus()
                 return true
             }
+
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }
         })
 
-        searchMenuItem.setOnActionExpandListener(object: MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                binding.tvNoData.visibility = View.GONE
-                binding.ivGithubUserLogo.visibility = View.GONE
-                binding.rvUser.visibility = View.VISIBLE
+        searchMenuItem.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
+                binding?.apply {
+                    tvNoData.visibility = View.GONE
+                    ivGithubUserLogo.visibility = View.GONE
+                    rvUser.visibility = View.VISIBLE
+                }
                 return true
             }
 
-            override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                binding.rvUser.visibility = View.GONE
-                binding.tvNoData.visibility = View.VISIBLE
-                binding.ivGithubUserLogo.visibility = View.VISIBLE
-                binding.tvNotFoundData.visibility = View.GONE
-                binding.progressBar.visibility = View.GONE
+            override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+                binding?.apply {
+                    rvUser.visibility = View.GONE
+                    tvNoData.visibility = View.VISIBLE
+                    ivGithubUserLogo.visibility = View.VISIBLE
+                    tvNotFoundData.visibility = View.GONE
+                    progressBar.visibility = View.GONE
+                }
                 return true
             }
         })
@@ -120,9 +125,13 @@ class MainActivity : AppCompatActivity() {
                     is Result.Success -> {
                         showLoading(false)
                         val userData = result.data
-                        if (userData.isNullOrEmpty()) {
+                        if (userData.isEmpty()) {
                             showNoData(true)
-                            Toast.makeText(this@MainActivity, getString(R.string.user_not_found), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@MainActivity,
+                                getString(R.string.user_not_found),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             showNoData(false)
                         }
@@ -130,33 +139,39 @@ class MainActivity : AppCompatActivity() {
                     }
                     is Result.Error -> {
                         showLoading(true)
-                        Toast.makeText(this@MainActivity, R.string.connection_failed, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@MainActivity,
+                            R.string.connection_failed,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
     }
 
-   private fun showRecycleList() {
-       listUserAdapter = ListUserAdapter()
-       binding.rvUser.layoutManager = LinearLayoutManager(this)
-       binding.rvUser.setHasFixedSize(true)
-       binding.rvUser.adapter = listUserAdapter
+    private fun showRecycleList() {
+        listUserAdapter = ListUserAdapter(this@MainActivity)
+        binding?.apply {
+            rvUser.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvUser.setHasFixedSize(true)
+            rvUser.adapter = listUserAdapter
+        }
 
-       listUserAdapter.setOnClickListener(object : ListUserAdapter.OnItemClickListener {
-           override fun onItemClicked(user: UserEntity) {
-               val intent = Intent(this@MainActivity, DetailActivity::class.java)
-               intent.putExtra(DetailActivity.EXTRA_USER, user)
-               startActivity(intent)
-           }
-       })
-   }
+        listUserAdapter.setOnClickListener(object : ListUserAdapter.OnItemClickListener {
+            override fun onItemClicked(user: UserEntity) {
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_USER, user)
+                startActivity(intent)
+            }
+        })
+    }
 
     private fun setThemeSetting() {
         val pref = SettingPreference.getInstance(dataStore)
-        settingViewModel = ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
-        settingViewModel.getThemeSetting().observe(this) {
-                isDarkModeActive: Boolean ->
+        settingViewModel =
+            ViewModelProvider(this, SettingViewModelFactory(pref))[SettingViewModel::class.java]
+        settingViewModel.getThemeSetting().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             } else {
@@ -166,20 +181,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showNoData(hasNoData: Boolean) {
-        binding.tvNotFoundData.visibility = if (hasNoData) View.VISIBLE else View.GONE
-        binding.ivGithubUserLogo.visibility = if (hasNoData) View.VISIBLE else View.GONE
+        binding?.apply {
+            tvNotFoundData.visibility = if (hasNoData) View.VISIBLE else View.GONE
+            ivGithubUserLogo.visibility = if (hasNoData) View.VISIBLE else View.GONE
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    companion object {
-        private const val TAG = "MainActivity"
     }
 }

@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "user")
@@ -15,7 +14,7 @@ class UserEntity(
     val username: String,
 
     @field:ColumnInfo(name = "name")
-    val name: String,
+    val name: String? = "",
 
     @field:ColumnInfo(name = "avatarUrl")
     val avatarUrl: String,
@@ -30,14 +29,14 @@ class UserEntity(
     val repository: Int,
 
     @field:ColumnInfo(name = "location")
-    var location: String,
+    var location: String?,
 
     @field:ColumnInfo(name = "company")
-    var company: String,
+    var company: String?,
 
     @field:ColumnInfo(name = "html_url")
     val url: String,
 
     @field:ColumnInfo(name = "favorite")
     var isFavorite: Boolean
-): Parcelable
+) : Parcelable

@@ -17,7 +17,7 @@ import com.android.githubuser.ui.viewmodel.SettingViewModel
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "Settings")
 
-class SettingPreferenceFragment: PreferenceFragmentCompat(),
+class SettingPreferenceFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var DARK: String
@@ -39,9 +39,11 @@ class SettingPreferenceFragment: PreferenceFragmentCompat(),
         darkModePreference = findPreference<SwitchPreference>(DARK) as SwitchPreference
 
         val pref = SettingPreference.getInstance(requireActivity().dataStore)
-        settingViewModel = ViewModelProvider(requireActivity(), SettingViewModelFactory(pref))[SettingViewModel::class.java]
-        settingViewModel.getThemeSetting().observe(requireActivity()) {
-                isDarkModeActive: Boolean ->
+        settingViewModel = ViewModelProvider(
+            requireActivity(),
+            SettingViewModelFactory(pref)
+        )[SettingViewModel::class.java]
+        settingViewModel.getThemeSetting().observe(requireActivity()) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 darkModePreference.isChecked = true

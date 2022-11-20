@@ -24,7 +24,8 @@
         android:src="@drawable/ic_github_user_logo_svg"
         app:layout_constraintBottom_toTopOf="@id/tv_no_data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/github_user_logo_main_activity" />
 
     <TextView
         android:id="@+id/tv_no_data"

@@ -4,7 +4,6 @@ import com.android.githubuser.BuildConfig
 import com.android.githubuser.data.remote.response.Items
 import com.android.githubuser.data.remote.response.UserResponse
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path

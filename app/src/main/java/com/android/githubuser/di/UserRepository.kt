@@ -11,26 +11,26 @@ import com.android.githubuser.data.remote.retrofit.ApiService
 class UserRepository private constructor(
     private val apiService: ApiService,
     private val userDao: UserDao
-){
+) {
     fun getUser(query: String): LiveData<Result<List<UserEntity>>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getUserSearch(query)
             val items = response.items
             val itemsDetail = items.map { user ->
-                apiService.getUserDetail(user.username) }
+                apiService.getUserDetail(user.username)
+            }
             val userList = itemsDetail.map { user ->
                 val isFavorite = userDao.isFavoriteUser(user.username)
-                val empty = ""
                 UserEntity(
                     user.username,
-                    user.name ?: empty,
+                    user.name,
                     user.avatarUrl,
                     user.followers,
                     user.following,
                     user.repository,
-                    user.location ?: empty,
-                    user.company ?: empty,
+                    user.location,
+                    user.company,
                     user.url,
                     isFavorite
                 )
@@ -41,7 +41,7 @@ class UserRepository private constructor(
             Log.d(TAG, "getUser: ${e.message}")
             emit(Result.Error(e.message.toString()))
         }
-   }
+    }
 
     fun isFavorite(username: String): LiveData<Boolean> = liveData {
         emit(userDao.isFavoriteUser(username))

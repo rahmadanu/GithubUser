@@ -2,14 +2,14 @@ package com.android.githubuser.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
 import com.android.githubuser.data.remote.response.Items
+import com.android.githubuser.databinding.FragmentFollowersFollowingBinding
 import com.android.githubuser.ui.activity.DetailActivity
 import com.android.githubuser.ui.adapter.ListUserFollowAdapter
 import com.android.githubuser.ui.viewmodel.FollowersFollowingViewModel
@@ -17,7 +17,7 @@ import com.android.githubuser.ui.viewmodel.FollowersFollowingViewModel
 class FollowersFragment : Fragment() {
 
     private var _binding: FragmentFollowersFollowingBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private val followViewModel by activityViewModels<FollowersFollowingViewModel>()
     private lateinit var listUserFollowAdapter: ListUserFollowAdapter
     private lateinit var username: String
@@ -28,7 +28,7 @@ class FollowersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFollowersFollowingBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,14 +54,15 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showRecycleList() {
-        listUserFollowAdapter = ListUserFollowAdapter()
+        listUserFollowAdapter = ListUserFollowAdapter(requireContext())
         listUserFollowAdapter.notifyDataSetChanged()
-        binding.apply {
+        binding?.apply {
             rvFollowers.layoutManager = LinearLayoutManager(requireContext())
             rvFollowers.setHasFixedSize(true)
             rvFollowers.adapter = listUserFollowAdapter
         }
-        listUserFollowAdapter.setOnItemClickCallback(object : ListUserFollowAdapter.OnItemClickCallBack {
+        listUserFollowAdapter.setOnItemClickCallback(object :
+            ListUserFollowAdapter.OnItemClickCallBack {
             override fun onItemClicked(data: Items) {
                 Toast.makeText(requireActivity(), data.username, Toast.LENGTH_SHORT).show()
             }
@@ -69,11 +70,11 @@ class FollowersFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showNoData(hasNoData: Boolean) {
-        binding.tvDataNotFound.visibility = if (hasNoData) View.VISIBLE else View.GONE
+        binding?.tvDataNotFound?.visibility = if (hasNoData) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

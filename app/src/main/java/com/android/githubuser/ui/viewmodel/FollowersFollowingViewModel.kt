@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FollowersFollowingViewModel: ViewModel() {
+class FollowersFollowingViewModel : ViewModel() {
 
     private val userFollowers = MutableLiveData<ArrayList<Items>>()
     private val userFollowing = MutableLiveData<ArrayList<Items>>()
@@ -28,8 +28,11 @@ class FollowersFollowingViewModel: ViewModel() {
         _isLoading.value = true
         _hasNoFollowing.value = false
         val client = ApiConfig.getApiService().getUserFollowing(username)
-        client.enqueue(object: Callback<ArrayList<Items>> {
-            override fun onResponse(call: Call<ArrayList<Items>>, response: Response<ArrayList<Items>>) {
+        client.enqueue(object : Callback<ArrayList<Items>> {
+            override fun onResponse(
+                call: Call<ArrayList<Items>>,
+                response: Response<ArrayList<Items>>
+            ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
                     userFollowing.postValue(response.body())
@@ -50,29 +53,32 @@ class FollowersFollowingViewModel: ViewModel() {
     }
 
     fun findUserFollowers(username: String) {
-         _isLoading.value = true
-         _hasNoFollowers.value = false
-         val client = ApiConfig.getApiService().getUserFollowers(username)
-         client.enqueue(object: Callback<ArrayList<Items>> {
-             override fun onResponse(call: Call<ArrayList<Items>>, response: Response<ArrayList<Items>>) {
-                 _isLoading.value = false
-                 if (response.isSuccessful) {
-                     userFollowers.postValue(response.body())
-                     if (response.body()?.isEmpty() == true) {
-                         _hasNoFollowers.value = true
-                     }
-                 } else {
-                     Log.e(TAG, "onFailure: ${response.message()}")
-                 }
-             }
+        _isLoading.value = true
+        _hasNoFollowers.value = false
+        val client = ApiConfig.getApiService().getUserFollowers(username)
+        client.enqueue(object : Callback<ArrayList<Items>> {
+            override fun onResponse(
+                call: Call<ArrayList<Items>>,
+                response: Response<ArrayList<Items>>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    userFollowers.postValue(response.body())
+                    if (response.body()?.isEmpty() == true) {
+                        _hasNoFollowers.value = true
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
 
-             override fun onFailure(call: Call<ArrayList<Items>>, t: Throwable) {
-                 _isLoading.value = false
-                 _hasNoFollowers.value = true
-                 Log.e(TAG, "onFailure: ${t.message}")
-             }
-         })
-     }
+            override fun onFailure(call: Call<ArrayList<Items>>, t: Throwable) {
+                _isLoading.value = false
+                _hasNoFollowers.value = true
+                Log.e(TAG, "onFailure: ${t.message}")
+            }
+        })
+    }
 
     fun getFollowersUser(): LiveData<ArrayList<Items>> {
         return userFollowers

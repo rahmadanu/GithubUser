@@ -1,6 +1,8 @@
 package com.android.githubuser.ui.activity
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build.VERSION
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -24,7 +26,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class DetailActivity : AppCompatActivity() {
 
     private var _binding: ActivityDetailBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
 
     private lateinit var detailViewModel: DetailViewModel
 
@@ -34,36 +36,65 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
-        user = intent.getParcelableExtra<UserEntity>(EXTRA_USER) as UserEntity
-        binding.apply {
-            Glide.with(this@DetailActivity)
-                .load(user.avatarUrl)
-                .apply(RequestOptions.placeholderOf(R.drawable.ic_loading).error(R.drawable.ic_error))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .circleCrop()
-                .into(ivAvatarDetail)
+        user = if (VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra(EXTRA_USER, UserEntity::class.java) as UserEntity
+        } else {
+            intent.getParcelableExtra<UserEntity>(EXTRA_USER) as UserEntity
+        }
+
+        binding?.apply {
+            when (this@DetailActivity.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    Glide.with(this@DetailActivity)
+                        .load(user.avatarUrl)
+                        .apply(
+                            RequestOptions.placeholderOf(R.drawable.ic_loading)
+                                .error(R.drawable.ic_error)
+                        )
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.color.grey_800)
+                        .circleCrop()
+                        .into(ivAvatarDetail)
+                }
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    Glide.with(this@DetailActivity)
+                        .load(user.avatarUrl)
+                        .apply(
+                            RequestOptions.placeholderOf(R.drawable.ic_loading)
+                                .error(R.drawable.ic_error)
+                        )
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .circleCrop()
+                        .into(ivAvatarDetail)
+                }
+                Configuration.UI_MODE_NIGHT_UNDEFINED -> {}
+            }
             tvNameDetail.text = user.name
             tvFollowersDetail.text = user.followers.toString()
-            tvFollowingDetail.text  = user.following.toString()
+            tvFollowingDetail.text = user.following.toString()
             tvRepositoryDetail.text = user.repository.toString()
             tvUsernameDetail.text = user.username
             tvLocationDetail.text = user.location
             tvCompanyDetail.text = user.company
 
-            if (user.name.isNullOrEmpty()) tvNameDetail.text = resources.getString(R.string.unset_data)
-            if (user.location.isNullOrEmpty()) tvLocationDetail.text = resources.getString(R.string.unset_data)
-            if (user.company.isNullOrEmpty()) tvCompanyDetail.text = resources.getString(R.string.unset_data)
+            if (user.name.isNullOrEmpty()) tvNameDetail.text =
+                resources.getString(R.string.unset_data)
+            if (user.location.isNullOrEmpty()) tvLocationDetail.text =
+                resources.getString(R.string.unset_data)
+            if (user.company.isNullOrEmpty()) tvCompanyDetail.text =
+                resources.getString(R.string.unset_data)
         }
 
-        detailViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[DetailViewModel::class.java]
+        detailViewModel =
+            ViewModelProvider(this, ViewModelFactory.getInstance(this))[DetailViewModel::class.java]
         detailViewModel.isFavorite(user.username).observe(this@DetailActivity) {
             isFavorite = it
             showFavoriteState()
         }
 
-        binding.fabFavorite.setOnClickListener {
+        binding?.fabFavorite?.setOnClickListener {
             if (isFavorite) {
                 detailViewModel.deleteUser(user)
                 isFavorite = false
@@ -85,7 +116,7 @@ class DetailActivity : AppCompatActivity() {
         viewPager.adapter = sectionViewPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
 
-        TabLayoutMediator(tabs, viewPager) {tab, position ->
+        TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
@@ -96,9 +127,9 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showFavoriteState() {
         if (isFavorite) {
-            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_yes)
+            binding?.fabFavorite?.setImageResource(R.drawable.ic_favorite_yes)
         } else {
-            binding.fabFavorite.setImageResource(R.drawable.ic_favorite_no)
+            binding?.fabFavorite?.setImageResource(R.drawable.ic_favorite_no)
         }
     }
 
@@ -120,21 +151,24 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.share -> {
-                val sendUserDetails = getString(
-                    R.string.user_details,
-                    binding.tvNameDetail.text,
-                    binding.tvUsernameDetail.text,
-                    binding.tvFollowersDetail.text,
-                    binding.tvFollowingDetail.text,
-                    binding.tvRepositoryDetail.text,
-                    binding.tvLocationDetail.text,
-                    binding.tvCompanyDetail.text
-                )
-                val intent = Intent(Intent.ACTION_SEND)
-                    .putExtra(Intent.EXTRA_TEXT, sendUserDetails)
-                    .setType("text/plain")
+                binding?.apply {
+                    val sendUserDetails = getString(
+                        R.string.user_details,
+                        tvNameDetail.text,
+                        tvUsernameDetail.text,
+                        tvFollowersDetail.text,
+                        tvFollowingDetail.text,
+                        tvRepositoryDetail.text,
+                        tvLocationDetail.text,
+                        tvCompanyDetail.text
+                    )
 
-                startActivity(Intent.createChooser(intent, "Send user details"))
+                    val intent = Intent(Intent.ACTION_SEND)
+                        .putExtra(Intent.EXTRA_TEXT, sendUserDetails)
+                        .setType("text/plain")
+
+                    startActivity(Intent.createChooser(intent, "Send user details"))
+                }
             }
         }
         return super.onOptionsItemSelected(item)
